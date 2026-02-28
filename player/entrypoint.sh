@@ -5,6 +5,9 @@ VIDEO_DIR="/opt/signage/videos"
 MPV_SOCK="/tmp/mpv.sock"
 WEB="http://web:8080"
 
+# Clean up stale X lock files from previous runs (e.g. after host reboot)
+rm -f /tmp/.X0-lock /tmp/.X11-unix/X0
+
 # Start Xorg on display :0, VT2
 Xorg :0 vt2 -nolisten tcp &
 
@@ -62,7 +65,11 @@ while true; do
     if [ -n "$(ls -A "$VIDEO_DIR" 2>/dev/null)" ]; then
         # Fetch ordered playlist from web server
         curl -sf "$WEB/api/playlist.m3u" -o /tmp/playlist.m3u 2>/dev/null || \
-            ls "$VIDEO_DIR"/* > /tmp/playlist.m3u 2>/dev/null || true
+            find "$VIDEO_DIR" -maxdepth 1 -type f \
+                \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.avi" -o -iname "*.mov" \
+                   -o -iname "*.webm" -o -iname "*.m4v" -o -iname "*.mpg" -o -iname "*.mpeg" \
+                   -o -iname "*.ts" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.ogv" \) \
+                > /tmp/playlist.m3u 2>/dev/null || true
 
         if [ -s /tmp/playlist.m3u ]; then
             mpv \

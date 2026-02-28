@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"sync"
 )
 
@@ -52,11 +53,21 @@ func saveOrder(order []string) {
 	os.WriteFile(stateFile, data, 0644)
 }
 
+var videoExts = map[string]bool{
+	".mp4": true, ".mkv": true, ".avi": true, ".mov": true,
+	".webm": true, ".m4v": true, ".mpg": true, ".mpeg": true,
+	".ts": true, ".flv": true, ".wmv": true, ".ogv": true,
+}
+
+func isVideo(name string) bool {
+	return videoExts[strings.ToLower(filepath.Ext(name))]
+}
+
 func orderedFiles() []string {
 	entries, _ := os.ReadDir(videoDir)
 	onDisk := map[string]bool{}
 	for _, e := range entries {
-		if !e.IsDir() {
+		if !e.IsDir() && isVideo(e.Name()) {
 			onDisk[e.Name()] = true
 		}
 	}
@@ -74,7 +85,7 @@ func orderedFiles() []string {
 		}
 	}
 	for _, e := range entries {
-		if !e.IsDir() && !seen[e.Name()] {
+		if !e.IsDir() && isVideo(e.Name()) && !seen[e.Name()] {
 			result = append(result, e.Name())
 		}
 	}
