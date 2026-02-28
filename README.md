@@ -41,8 +41,8 @@ Open `http://<host-ip>` in a browser.
 
 ```
 ┌─────────────────────────────────────────────────┐
-│ Docker Compose                                   │
-│                                                  │
+│ Docker Compose                                  │
+│                                                 │
 │  ┌──────────────┐        ┌───────────────────┐  │
 │  │  web         │        │  player           │  │
 │  │              │        │                   │  │
@@ -50,8 +50,8 @@ Open `http://<host-ip>` in a browser.
 │  │  React UI    │        │  Xorg + mpv       │  │
 │  │  ffmpeg      │        │  socat/jq/curl    │  │
 │  └──────┬───────┘        └───────────────────┘  │
-│         │                                        │
-│  ./videos  ./state  ./thumbnails  (bind mounts)  │
+│         │                                       │
+│  ./videos  ./state  ./thumbnails  (bind mounts) │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -81,18 +81,18 @@ player/
 
 ## API Reference
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/list` | Ordered list of filenames (JSON) |
-| GET | `/api/playlist.m3u` | Ordered playlist for mpv (text) |
-| POST | `/api/order` | Save new file order (JSON array of filenames) |
-| POST | `/api/upload` | Upload a video file (multipart) |
-| DELETE | `/api/delete/:name` | Delete a video and its thumbnail |
-| GET | `/api/download/:name` | Download a video file |
-| GET | `/api/thumbnail/:name` | Serve a generated JPEG thumbnail |
-| POST | `/api/play/:name` | Queue an immediate play command for mpv |
-| GET | `/api/status` | Current playback status (filename, elapsed, duration) |
-| POST | `/api/status` | Player reports status; response may contain a command |
+| Method | Endpoint               | Description                                           |
+|--------|------------------------|-------------------------------------------------------|
+| GET    | `/api/list`            | Ordered list of filenames (JSON)                      |
+| GET    | `/api/playlist.m3u`    | Ordered playlist for mpv (text)                       |
+| POST   | `/api/order`           | Save new file order (JSON array of filenames)         |
+| POST   | `/api/upload`          | Upload a video file (multipart)                       |
+| DELETE | `/api/delete/:name`    | Delete a video and its thumbnail                      |
+| GET    | `/api/download/:name`  | Download a video file                                 |
+| GET    | `/api/thumbnail/:name` | Serve a generated JPEG thumbnail                      |
+| POST   | `/api/play/:name`      | Queue an immediate play command for mpv               |
+| GET    | `/api/status`          | Current playback status (filename, elapsed, duration) |
+| POST   | `/api/status`          | Player reports status; response may contain a command |
 
 ## Player ↔ Web Communication
 
