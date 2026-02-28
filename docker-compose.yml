@@ -1,0 +1,19 @@
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:8080"
+    volumes:
+      - ./videos:/opt/signage/videos
+      - ./state:/opt/signage/state
+      - ./thumbnails:/opt/signage/thumbnails
+    restart: always
+
+  player:
+    build: ./player
+    volumes:
+      - ./videos:/opt/signage/videos
+    devices:
+      - /dev/dri:/dev/dri
+    privileged: true
+    restart: always

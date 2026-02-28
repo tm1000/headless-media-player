@@ -1,0 +1,19 @@
+# Media and generated files
+videos/*
+thumbnails/*
+state/*
+
+# Keep directory structure
+!videos/.gitkeep
+!thumbnails/.gitkeep
+!state/.gitkeep
+
+# Node
+web/ui/node_modules/
+web/ui/dist/
+
+# Go
+web/signage-web
+
+# Docker
+*.log
